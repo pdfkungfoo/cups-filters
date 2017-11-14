@@ -3,6 +3,7 @@ compiler: gcc
 sudo: require
 dist: trusty
 
+script:
   - ./configure --prefix=/usr
   - make -j$(nproc)
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/

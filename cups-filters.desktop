@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=cups-filters
+Type=Application
+Exec=cups-browsed
+Icon=cups-filters
+Comment=Filters, Helper Tools and Daemons to make CUPS fully work on Linux
+Categories=Printing;
+Terminal=true

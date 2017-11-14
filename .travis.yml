@@ -4,6 +4,7 @@ sudo: require
 dist: trusty
 
 script:
+  - ./autogen.sh
   - ./configure --prefix=/usr
   - make -j$(nproc)
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/

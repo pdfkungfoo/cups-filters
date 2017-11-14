@@ -12,8 +12,8 @@ script:
   - ./configure --prefix=/usr
   - make -j$(nproc)
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
-  - mkdir appdir/usr/share/icons/hicolor/256x256/apps/ ; touch appdir/usr/share/icons/hicolor/256x256/apps/cups-filters.png
-  - mkdir appdir/usr/share/applications/ ; cp cups-filters.desktop appdir/usr/share/applications/
+  - mkdir -p appdir/usr/share/icons/hicolor/256x256/apps/ ; touch appdir/usr/share/icons/hicolor/256x256/apps/cups-filters.png
+  - mkdir -p appdir/usr/share/applications/ ; cp cups-filters.desktop appdir/usr/share/applications/
   - wget -c -q "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH

@@ -3,6 +3,10 @@ compiler: gcc
 sudo: require
 dist: trusty
 
+before_install:
+   - sudo apt-get update -qq
+   - sudo apt-get install cups-dev libpoppler-cpp-dev libijs-dev libpng12-dev zlib1g-dev libtiff5-dev libopenjpeg-dev
+
 script:
   - ./autogen.sh
   - ./configure --prefix=/usr
@@ -27,3 +31,19 @@ branches:
     - /^(?i:continuous)$/
 
 ####### wir brauchen noch ein .desktop file
+
+#    Poppler, libijs, freetype, fontconfig, and liblcms (liblcms2 recommended) 
+#    must be installed to be able to compile this package.
+#
+#    Note that Poppler has to be compiled with the
+#    "--enable-poppler-cpp" configure option (or the
+#    "libpoppler-cpp-dev(el)" package has to be installed if the
+#    Poppler packages from a Linux distribution are used).
+#
+#    Besides these tools you'll want the JPEG, PNG, TIFF, ZLIB libraries for
+#    image support. CUPS Filters will compile and run without these, however
+#    you'll miss out on many of the features provided by CUPS Filters.
+#
+#    To get cups-browsed, the daemon to browse Bonjour broadcasts of
+#    remote CUPS queues and make the queues available locally, you also
+#    need libavahi-common and libavahi-client.

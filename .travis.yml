@@ -5,7 +5,7 @@ dist: trusty
 
 before_install:
    - sudo apt-get update -qq
-   - sudo apt-get -y install libqpdf-dev libavahi-cil-dev libavahi-client-dev libavahi-common-dev libavahi-compat-libdnssd-dev libavahi-core-dev libavahi-glib-dev libavahi-gobject-dev libcups2-dev libcupscgi1-dev libcupsfilters-dev libcupsimage2-dev libcupsmime1-dev libcupsppdc1-dev libfontembed-dev libpoppler-cpp-dev libijs-dev libpng12-dev zlib1g-dev libtiff5-dev libopenjpeg-dev libfreetype6-dev libfontconfig1-dev
+   - sudo apt-get -y install ghostscript gsfonts libqpdf-dev libavahi-cil-dev libavahi-client-dev libavahi-common-dev libavahi-compat-libdnssd-dev libavahi-core-dev libavahi-glib-dev libavahi-gobject-dev libcups2-dev libcupscgi1-dev libcupsfilters-dev libcupsimage2-dev libcupsmime1-dev libcupsppdc1-dev libfontembed-dev libpoppler-cpp-dev libijs-dev libpng12-dev zlib1g-dev libtiff5-dev libopenjpeg-dev libfreetype6-dev libfontconfig1-dev
 
 script:
   - ./autogen.sh

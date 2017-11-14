@@ -3,23 +3,9 @@ compiler: gcc
 sudo: require
 dist: trusty
 
-#before_install:
-#    - sudo add-apt-repository ppa:beineri/opt-qt592-trusty -y
-#    - sudo apt-get update -qq
-
-#install:
-#    - sudo apt-get -y install qt59base
-#    - source /opt/qt*/bin/qt*-env.sh
-#    - cups-devel?
-
-script:
-#  - qmake CONFIG+=release PREFIX=/usr
-#  - make -j$(nproc)
-#  - make INSTALL_ROOT=appdir -j$(nproc) install ; find appdir/
-   - ./configure --prefix=/usr
-   - make -j$(nproc)
-   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
-####### wir brauchen noch ein .desktop file
+  - ./configure --prefix=/usr
+  - make -j$(nproc)
+  - make install DESTDIR=$(readlink -f appdir) ; find appdir/
   - wget -c -q "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
@@ -37,3 +23,5 @@ branches:
   except:
     - # Do not build tags that we create when we upload to GitHub Releases
     - /^(?i:continuous)$/
+
+####### wir brauchen noch ein .desktop file

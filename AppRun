@@ -1,0 +1,112 @@
+#!/bin/bash
+
+# The purpose of this custom AppRun script is
+# to allow symlinking the AppImage and invoking
+# the corresponding binary depending on which
+# symlink was used to invoke the AppImage
+
+HERE="$(dirname "$(readlink -f "${0}")")"
+
+# All of the following may have to be massaged-in...
+# export CUPS_DEFAULT_DOMAINSOCKET="/var/run/cups/cups.sock"
+# export CUPS_STATEDIR="/var/run/cups"
+# export CUPS_SERVERBIN="/usr/local/lib/cups"
+# export CUPS_FONTPATH="/usr/local/share/cups/fonts"
+# export CUPS_SERVERROOT="/usr/local/etc/cups"
+# export CUPS_DATADIR="/usr/local/share/cups"
+# export CUPS_LIBS="-lcupsimage -lcups -lz -lpthread -lm -lcrypt -lz"
+# export CUPS_CFLAGS="-I/usr/local/include"
+# export CUPS_DATADIR="/usr/local/share/cups"
+# export CUPS_SERVERROOT="/usr/local/etc/cups"
+# export CUPS_FONTPATH="/usr/local/share/cups/fonts"
+# export CUPS_SERVERBIN="/usr/local/lib/cups"
+
+# export CUPS_STATEDIR="/var/run/cups"
+# export CUPS_DEFAULT_DOMAINSOCKET="/var/run/cups/cups.sock"
+
+export CUPS_1_4="1"
+export CUPS_PDFTOPS_MAX_RESOLUTION="1440"
+export CUPS_GHOSTSCRIPT="gs"
+export CUPS_POPPLER_PDFTOCAIRO="pdftocairo"
+export CUPS_ACROREAD="acroread"
+export CUPS_PDFTOPS_RENDERER="HYBRID"
+export CUPS_MUTOOL="$HERE/usr/bin/mutool"
+export CUPS_POPPLER_PDFTOPS="$HERE/usr/bin/pdftops"
+export CUPS_IPPFIND="$HERE/usr/bin/ippfind"
+export CUPS_PDFTOPS="$HERE/usr/bin/pdftops"
+export CUPS_MUTOOL="$HERE/usr/bin/mutool"
+
+
+
+# ./usr/lib/cups/driver/driverless
+# ./usr/lib/cups/filter/textbrftoindexv4
+# ./usr/lib/cups/filter/commandtoescpx
+# ./usr/lib/cups/filter/texttops
+# ./usr/lib/cups/filter/imageubrltoindexv3
+# ./usr/lib/cups/filter/musicxmltobrf
+# ./usr/lib/cups/filter/vectortobrf
+# ./usr/lib/cups/filter/cgmtopdf
+# ./usr/lib/cups/filter/mupdftoraster
+# ./usr/lib/cups/filter/urftopdf
+# ./usr/lib/cups/filter/vectortopdf
+# ./usr/lib/cups/filter/pdftoraster
+# ./usr/lib/cups/filter/pdftops
+# ./usr/lib/cups/filter/pdftoopvp
+# ./usr/lib/cups/filter/rastertoescpx
+# ./usr/lib/cups/filter/bannertopdf
+# ./usr/lib/cups/filter/rastertops
+# ./usr/lib/cups/filter/pdftopdf
+# ./usr/lib/cups/filter/imageubrltoindexv4
+# ./usr/lib/cups/filter/pdftoijs
+# ./usr/lib/cups/filter/imagetopdf
+# ./usr/lib/cups/filter/texttobrf
+# ./usr/lib/cups/filter/gstopdf
+# ./usr/lib/cups/filter/sys5ippprinter
+# ./usr/lib/cups/filter/cmxtopdf
+# ./usr/lib/cups/filter/texttotext
+# ./usr/lib/cups/filter/rastertopclm
+# ./usr/lib/cups/filter/wmftopdf
+# ./usr/lib/cups/filter/texttopdf
+# ./usr/lib/cups/filter/commandtopclx
+# ./usr/lib/cups/filter/textbrftoindexv3
+# ./usr/lib/cups/filter/xfigtopdf
+# ./usr/lib/cups/filter/imagetobrf
+# ./usr/lib/cups/filter/gstoraster
+# ./usr/lib/cups/filter/brftoembosser
+# ./usr/lib/cups/filter/gstopxl
+# ./usr/lib/cups/filter/imagetoubrl
+# ./usr/lib/cups/filter/imagetoraster
+# ./usr/lib/cups/filter/rastertopclx
+# ./usr/lib/cups/filter/foomatic-rip
+# ./usr/lib/cups/filter/vectortoubrl
+# ./usr/lib/cups/filter/rastertopdf
+# ./usr/lib/cups/filter/emftopdf
+# ./usr/lib/cups/filter/svgtopdf
+# ./usr/lib/cups/filter/imagetops
+# ./usr/bin/ttfread
+# ./usr/bin/driverless
+# ./usr/bin/cups-browsed
+# ./usr/bin/foomatic-rip
+
+if [ "$1" == "man" ] ; then
+  shift 1 ; export MANPATH="$HERE/usr/share/man:$MANPATH" ; exec "$@" ; exit $?
+elif [ "$1" == "info" ] ; then
+  shift 1 ; export INFOPATH="$HERE/usr/share/info:$INFOPATH" ; exec "$@" ; exit $?
+fi
+
+if [ ! -z $APPIMAGE ] ; then
+  BINARY_NAME=$(basename "$ARGV0")
+  if [ -e "$HERE/usr/bin/$BINARY_NAME" ] ; then
+    exec "$HERE/usr/bin/$BINARY_NAME" "$@"
+  elif [ -e "$HERE/usr/lib/cups/filter/$BINARY_NAME" ] ; then
+    exec "$HERE/usr/lib/cups/filter/$BINARY_NAME"
+  elif [ -e "$HERE/usr/lib/cups/backend/$BINARY_NAME" ] ; then
+    exec "$HERE/usr/lib/cups/backend/$BINARY_NAME"
+  elif [ -e "$HERE/usr/lib/cups/driver/$BINARY_NAME" ] ; then
+    exec "$HERE/usr/lib/cups/driver/$BINARY_NAME"
+  else
+    exec "$HERE/usr/bin/cups-browsed" "$@"
+  fi
+else
+  exec "$HERE/usr/bin/cups-browsed" "$@"
+fi

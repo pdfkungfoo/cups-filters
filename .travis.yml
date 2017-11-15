@@ -5,7 +5,8 @@ dist: trusty
 
 before_install:
    - sudo apt-get update -qq
-   - sudo apt-get -y install cups-ipp-utils liblouis-dev poppler-utils mupdf-tools ghostscript gsfonts libqpdf-dev libqpdf17 libqpdf13 libavahi-cil-dev libavahi-client-dev libavahi-common-dev libavahi-compat-libdnssd-dev libavahi-core-dev libavahi-glib-dev libavahi-gobject-dev libcups2-dev libcupscgi1-dev libcupsfilters-dev libcupsimage2-dev libcupsmime1-dev libcupsppdc1-dev libfontembed-dev libpoppler-cpp-dev libijs-dev libpng12-dev zlib1g-dev libtiff5-dev libopenjpeg-dev libfreetype6-dev libfontconfig1-dev
+   - sudo apt-get -y install liblouis-dev poppler-utils mupdf-tools ghostscript gsfonts libqpdf-dev libqpdf13 libavahi-cil-dev libavahi-client-dev libavahi-common-dev libavahi-compat-libdnssd-dev libavahi-core-dev libavahi-glib-dev libavahi-gobject-dev libcups2-dev libcupscgi1-dev libcupsfilters-dev libcupsimage2-dev libcupsmime1-dev libcupsppdc1-dev libfontembed-dev libpoppler-cpp-dev libijs-dev libpng12-dev zlib1g-dev libtiff5-dev libopenjpeg-dev libfreetype6-dev libfontconfig1-dev
+   - # sudo apt-get -y install cups-ipp-utils
 
 script:
   - ./autogen.sh
@@ -14,7 +15,8 @@ script:
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
   - mv appdir/usr/sbin/* appdir/usr/bin/ ; rm -rf appdir/usr/sbin
   - mv appdir/usr/local/bin/* appdir/usr/bin/ ; rm -rf appdir/usr/local/bin
-  - cp -a /usr/bin/{ippfind,mutool,pdftops} appdir/usr/bin/
+  - cp -a /usr/bin/{mutool,pdftops} appdir/usr/bin/
+  - # cp -a /usr/bin/ippfind appdir/usr/bin/
   - mkdir -p appdir/usr/share/icons/hicolor/256x256/apps/ ; touch appdir/usr/share/icons/hicolor/256x256/apps/cups-filters.png
   - mkdir -p appdir/usr/share/applications/ ; cp cups-filters.desktop appdir/usr/share/applications/
   - wget -c -q "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"

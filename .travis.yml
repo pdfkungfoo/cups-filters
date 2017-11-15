@@ -9,10 +9,12 @@ before_install:
 
 script:
   - ./autogen.sh
-  - ./configure --prefix=/usr
+  - ./configure --prefix=/usr --enable-driverless --enable-auto-setup-driverless --enable-pclm --enable-poppler --enable-dbus --enable-braille
   - make -j$(nproc)
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
   - mv appdir/usr/sbin/* appdir/usr/bin/ ; rm -rf appdir/usr/sbin
+  - mv appdir/usr/local/bin/* appdir/usr/bin/ ; rm -rf appdir/usr/local/bin
+  - cp -a /usr/bin/{ippfind,mutool,pdftops} appdir/usr/bin/
   - mkdir -p appdir/usr/share/icons/hicolor/256x256/apps/ ; touch appdir/usr/share/icons/hicolor/256x256/apps/cups-filters.png
   - mkdir -p appdir/usr/share/applications/ ; cp cups-filters.desktop appdir/usr/share/applications/
   - wget -c -q "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"

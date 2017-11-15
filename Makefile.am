@@ -10,7 +10,7 @@ doc_DATA = \
 	COPYING \
 	NEWS \
 	INSTALL \
-	README
+	README.orig
 
 EXTRA_DIST = \
 	$(doc_DATA) \
